@@ -1,0 +1,431 @@
+/* --------------------------------
+   Global
+-------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Courier New", monospace;
+  background: #1b1b1b;
+}
+
+/* --------------------------------
+   Main Container
+-------------------------------- */
+
+.game-container {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  color: var(--text-color);
+}
+
+/* --------------------------------
+   Title
+-------------------------------- */
+
+h1 {
+  margin: 0 0 15px;
+
+  color: var(--board-color);
+
+  font-size: 32px;
+
+  letter-spacing: 4px;
+}
+
+/* --------------------------------
+   Score Container
+-------------------------------- */
+
+.score-container {
+  width: 500px;
+
+  display: flex;
+  justify-content: space-around;
+
+  margin-bottom: 12px;
+  padding: 10px;
+
+  background: var(--board-color);
+
+  color: var(--text-color);
+
+  border: 4px solid var(--border-color);
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  text-align: center;
+}
+
+.score-container div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.score-container span {
+  font-size: 24px;
+}
+
+/* --------------------------------
+   Game Board
+-------------------------------- */
+
+.game-board {
+  width: 500px;
+  height: 500px;
+
+  position: relative;
+
+  background: var(--board-color);
+
+  border: 8px solid var(--border-color);
+
+  box-shadow:
+    0 0 0 4px var(--border-color),
+    0 12px 30px rgba(0, 0, 0, 0.5);
+
+  overflow: hidden;
+}
+
+/* --------------------------------
+   Board Grid
+-------------------------------- */
+
+.game-board::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+
+  background-size: 20px 20px;
+
+  pointer-events: none;
+}
+
+/* --------------------------------
+   Snake
+-------------------------------- */
+
+.snake-segment {
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--snake-color);
+
+  border: 2px solid var(--border-color);
+
+  z-index: 2;
+}
+
+/* --------------------------------
+   Snake Head
+-------------------------------- */
+
+.snake-head {
+  background: var(--snake-head-color);
+
+  border: 2px solid var(--border-color);
+
+  border-radius: 5px;
+
+  color: var(--board-color);
+
+  font-size: 8px;
+}
+
+/* --------------------------------
+   Normal Laddu
+-------------------------------- */
+
+.laddu {
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+
+  z-index: 3;
+}
+
+/* --------------------------------
+   Bonus Food
+-------------------------------- */
+
+.bonus-food {
+  width: 20px;
+  height: 20px;
+
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  z-index: 4;
+
+  animation: bonusPulse 0.6s infinite alternate;
+}
+
+/* --------------------------------
+   Bonus Food Animation
+-------------------------------- */
+
+@keyframes bonusPulse {
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+/* --------------------------------
+   Overlay
+-------------------------------- */
+
+.overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--board-color);
+
+  opacity: 0.92;
+
+  color: var(--text-color);
+
+  z-index: 10;
+
+  text-align: center;
+}
+
+.overlay h2 {
+  margin: 0 0 10px;
+
+  font-size: 36px;
+
+  letter-spacing: 3px;
+}
+
+.overlay p {
+  margin: 5px;
+
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+/* --------------------------------
+   Game Controls
+-------------------------------- */
+
+.game-controls {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 20px;
+}
+
+.game-controls button {
+  padding: 10px 20px;
+
+  background: var(--board-color);
+
+  color: var(--text-color);
+
+  border: 3px solid var(--border-color);
+
+  font-family: "Courier New", monospace;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.15s;
+}
+
+.game-controls button:hover {
+  background: var(--snake-color);
+
+  color: var(--board-color);
+}
+
+.game-controls button:active {
+  transform: scale(0.95);
+}
+
+/* --------------------------------
+   Direction Controls
+-------------------------------- */
+
+.direction-controls {
+  margin-top: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.middle-controls {
+  display: flex;
+
+  gap: 8px;
+}
+
+.direction-btn {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--board-color);
+
+  color: var(--text-color);
+
+  border: 3px solid var(--border-color);
+
+  font-family: "Courier New", monospace;
+
+  font-size: 30px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  touch-action: manipulation;
+
+  transition: 0.1s;
+}
+
+.direction-btn:hover {
+  background: var(--snake-color);
+
+  color: var(--board-color);
+}
+
+.direction-btn:active {
+  transform: scale(0.92);
+}
+
+/* --------------------------------
+   Instructions
+-------------------------------- */
+
+.instructions {
+  margin-top: 15px;
+
+  color: var(--board-color);
+
+  text-align: center;
+
+  font-size: 14px;
+}
+
+.instructions p {
+  margin: 4px;
+}
+
+/* --------------------------------
+   Mobile Responsive
+-------------------------------- */
+
+@media (max-width: 600px) {
+  .game-container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+
+    letter-spacing: 2px;
+  }
+
+  .score-container {
+    width: 95vw;
+
+    font-size: 12px;
+  }
+
+  .score-container span {
+    font-size: 18px;
+  }
+
+  .game-board {
+    width: 95vw;
+    height: 95vw;
+
+    border-width: 5px;
+  }
+
+  .game-controls {
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .game-controls button {
+    font-size: 14px;
+
+    padding: 8px 14px;
+  }
+
+  .direction-btn {
+    width: 50px;
+    height: 50px;
+
+    font-size: 26px;
+  }
+
+  .instructions {
+    font-size: 12px;
+  }
+}
